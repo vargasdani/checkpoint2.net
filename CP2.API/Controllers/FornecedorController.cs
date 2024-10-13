@@ -18,14 +18,14 @@ namespace CP2.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para obter todos os dados do Fornecedor
+        /// Metodo para obter dados do Fornecedor
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lista fornecedores</returns>
         [HttpGet]
         [Produces<IEnumerable<FornecedorEntity>>]
         public IActionResult Get()
         {
-            var objModel = _applicationService.ObterTodosFornecedores();
+            var objModel = _applicationService.ObterTodos();
 
             if (objModel is not null)
                 return Ok(objModel);
@@ -33,12 +33,15 @@ namespace CP2.API.Controllers
             return BadRequest("Não foi possivel obter os dados");
         }
 
-
+        /// <summary>
+        /// Metodo para obter dados do fornecedor a partir do ID
+        /// </summary>
+        /// <returns>Fornecedor por ID</returns>
         [HttpGet("{id}")]
         [Produces<FornecedorEntity>]
         public IActionResult GetPorId(int id)
         {
-            var objModel = _applicationService.ObterFornecedorPorId(id);
+            var objModel = _applicationService.ObterPorId(id);
 
             if (objModel is not null)
                 return Ok(objModel);
@@ -46,14 +49,17 @@ namespace CP2.API.Controllers
             return BadRequest("Não foi possivel obter os dados");
         }
 
-
+        /// <summary>
+        /// Metodo para adicionar fornecedor
+        /// </summary>
+        /// <returns>Adicionar novo fornecedor</returns>
         [HttpPost]
         [Produces<FornecedorEntity>]
         public IActionResult Post([FromBody] FornecedorDto entity)
         {
             try
             {
-                var objModel = _applicationService.SalvarDadosFornecedor(entity);
+                var objModel = _applicationService.SalvarDados();
 
                 if (objModel is not null)
                     return Ok(objModel);
@@ -70,13 +76,17 @@ namespace CP2.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo para editar um fornecedor a partir do ID
+        /// </summary>
+        /// <returns>Alteração do fornecedor</returns>
         [HttpPut("{id}")]
         [Produces<FornecedorEntity>]
         public IActionResult Put(int id, [FromBody] FornecedorDto entity)
         {
             try
             {
-                var objModel = _applicationService.EditarDadosFornecedor(id, entity);
+                var objModel = _applicationService.SalvarDados();
 
                 if (objModel is not null)
                     return Ok(objModel);
@@ -93,12 +103,15 @@ namespace CP2.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Metodo para deletar um fornecedor a partir do ID
+        /// </summary>
+        /// <returns>Fornecedor excluído</returns>
         [HttpDelete("{id}")]
         [Produces<FornecedorEntity>]
         public IActionResult Delete(int id)
         {
-            var objModel = _applicationService.DeletarDadosFornecedor(id);
+            var objModel = _applicationService.DeletarDados(id);
 
             if (objModel is not null)
                 return Ok(objModel);

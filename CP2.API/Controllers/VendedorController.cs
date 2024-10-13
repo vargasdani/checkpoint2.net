@@ -14,18 +14,18 @@ namespace CP2.API.Controllers
 
         public VendedorController(IVendedorApplicationService applicationService)
         {
-            _applicationService = applicationService;   
+            _applicationService = applicationService;
         }
 
         /// <summary>
         /// Metodo para obter todos os dados do Vendedor
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Enumeracao vendedores</returns>
         [HttpGet]
         [Produces<IEnumerable<VendedorEntity>>]
         public IActionResult Get()
         {
-            var objModel = _applicationService.ObterTodosVendedores();
+            var objModel = _applicationService.ObterTodos();
 
             if (objModel is not null)
                 return Ok(objModel);
@@ -33,12 +33,15 @@ namespace CP2.API.Controllers
             return BadRequest("Não foi possivel obter os dados");
         }
 
-
+        /// <summary>
+        /// Metodo para ter os dados do vendedor a partir do ID
+        /// </summary>
+        /// <returns>Lista vendedores</returns>
         [HttpGet("{id}")]
         [Produces<VendedorEntity>]
         public IActionResult GetPorId(int id)
         {
-            var objModel = _applicationService.ObterVendedorPorId(id);
+            var objModel = _applicationService.ObterPorId(id);
 
             if (objModel is not null)
                 return Ok(objModel);
@@ -46,14 +49,17 @@ namespace CP2.API.Controllers
             return BadRequest("Não foi possivel obter os dados");
         }
 
-
+        /// <summary>
+        /// Metodo para realizar adicionar vendedor
+        /// </summary>
+        /// <returns>Vendedor incluido</returns>
         [HttpPost]
         [Produces<VendedorEntity>]
         public IActionResult Post([FromBody] VendedorDto entity)
         {
             try
             {
-                var objModel = _applicationService.SalvarDadosVendedor(entity);
+                var objModel = _applicationService.SalvarDados();
 
                 if (objModel is not null)
                     return Ok(objModel);
@@ -70,13 +76,17 @@ namespace CP2.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo para atualizar dados do vendedor
+        /// </summary>
+        /// <returns>Atualizacao de dados do vendedor bem sucedida</returns>
         [HttpPut("{id}")]
         [Produces<VendedorEntity>]
         public IActionResult Put(int id, [FromBody] VendedorDto entity)
         {
             try
             {
-                var objModel = _applicationService.EditarDadosVendedor(id, entity);
+                var objModel = _applicationService.EditarDados();
 
                 if (objModel is not null)
                     return Ok(objModel);
@@ -93,12 +103,15 @@ namespace CP2.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Metodo para deletar dados do vendedor
+        /// </summary>
+        /// <returns>Dados do vendedor apagados</returns>
         [HttpDelete("{id}")]
         [Produces<VendedorEntity>]
         public IActionResult Delete(int id)
         {
-            var objModel = _applicationService.DeletarDadosVendedor(id);
+            var objModel = _applicationService.DeletarDados(id);
 
             if (objModel is not null)
                 return Ok(objModel);

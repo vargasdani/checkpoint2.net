@@ -13,5 +13,9 @@ namespace CP2.Data.AppData
         public DbSet<FornecedorEntity> Fornecedor { get; set; }
         public DbSet<VendedorEntity> Vendedor { get; set; }
 
+        internal void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

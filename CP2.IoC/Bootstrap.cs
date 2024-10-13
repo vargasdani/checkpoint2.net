@@ -12,12 +12,19 @@ namespace CP2.IoC
     {
         public static void Start(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationContext>(x => {
+            // Configurando o DbContext
+            services.AddDbContext<ApplicationContext>(x =>
+            {
                 x.UseOracle(configuration["ConnectionStrings:Oracle"]);
             });
 
-
+            // Injetando repositórios
             services.AddTransient<IFornecedorRepository, FornecedorRepository>();
+            services.AddTransient<IVendedorRepository, VendedorRepository>();
+
+            // Injetando serviços de aplicação
+            services.AddTransient<IFornecedorApplicationService, FornecedorApplicationService>();
+            services.AddTransient<IVendedorApplicationService, VendedorApplicationService>();
         }
     }
 }
